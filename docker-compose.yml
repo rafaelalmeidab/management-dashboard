@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "5174:5174"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - VITE_APP_VERSION=v1.3.0
+      - GENERATE_SOURCEMAP=false
+      - PUBLIC_URL=https://mantisdashboard.io/free
+      - VITE_APP_BASE_NAME=/free
+    command: ["yarn", "start"]

@@ -1,40 +1,37 @@
-// https://github.com/vitejs/vite/discussions/3448
 import path from 'path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import jsconfigPaths from 'vite-jsconfig-paths';
 
-// ----------------------------------------------------------------------
-
+// Configuração do Vite
 export default defineConfig({
-  plugins: [react(), jsconfigPaths()],
-  // https://github.com/jpuri/react-draft-wysiwyg/issues/1317
-  base: '/free', // accessing env variable is not possible here. So hard coding this.
+  plugins: [
+    react(),       // Plugin para suporte a React
+    jsconfigPaths() // Plugin para suporte a caminhos configuráveis no JS/TS
+  ],
+  base: '/',  // Base URL para o projeto, se necessário
   define: {
-    global: 'window'
+    global: 'window' // Definindo 'global' como 'window' para compatibilidade
   },
   resolve: {
-    alias: [
-      {
-        find: /^~(.+)/,
-        replacement: path.join(process.cwd(), 'node_modules/$1')
-      },
-      {
-        find: /^src(.+)/,
-        replacement: path.join(process.cwd(), 'src/$1')
-      }
-    ]
+    alias: {
+      '~': path.resolve(__dirname, 'node_modules'), // Alias para node_modules
+      'src': path.resolve(__dirname, 'src') // Alias para src
+    }
   },
   server: {
-    // this ensures that the browser opens upon server start
-    open: true,
-    // this sets a default port to 3000
-    port: 3000
+    open: false, // Desativa a abertura automática do navegador
+    port: 5174,  // Porta para o servidor de desenvolvimento
+    host: true,  // Permite que o servidor seja acessível a partir de qualquer endereço IP
+    hmr: {
+      // Configuração para Hot Module Replacement
+      protocol: 'ws',
+      port: 5174
+    }
   },
   preview: {
-    // this ensures that the browser opens upon preview start
-    open: true,
-    // this sets a default port to 3000
-    port: 3000
+    open: false, // Desativa a abertura automática do navegador na pré-visualização
+    port: 5174,  // Porta para a pré-visualização
+    host: true   // Permite que o servidor seja acessível a partir de qualquer endereço IP
   }
 });
