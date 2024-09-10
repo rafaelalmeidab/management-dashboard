@@ -62,7 +62,7 @@ function MainCard(
       {darkTitle && title && <CardHeader sx={headerSX} title={<Typography variant="h3">{title}</Typography>} action={secondary} />}
 
       {/* card content */}
-      {content && <CardContent sx={contentSX}>{children}</CardContent>}
+      {/* {content && <CardContent sx={contentSX}>{children}</CardContent>} */}
       {!content && children}
     </Card>
   );
